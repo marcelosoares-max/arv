@@ -494,7 +494,7 @@ footer b{color:var(--ink);font-weight:600}
         <thead><tr><th>Jornada</th><th>Quem inicia</th><th>Participantes</th><th>Integração com o CRM</th><th>Recursos do WhatsApp</th></tr></thead>
         <tbody>
           <tr><td><i style="background:var(--teal)"></i>Antecipação de recebíveis</td><td>Cliente, pelo menu de atendimento (receptivo), ou CRM do parceiro, por notificação ativa</td><td>Cliente ARV, Agent Blip, Agent negociador, atendimento humano do parceiro, CRM do parceiro</td><td>Dispara a notificação, valida o celular, consulta saldo e margem, solicita a antecipação e cadastra a recorrência</td><td><div class="chips"><span>Template</span><span>Botões</span><span>Lista</span><span>Agent negociador</span><span>Transbordo humano</span></div></td></tr>
-          <tr><td><i style="background:var(--amber)"></i>Negociação de combustível</td><td>Analista, via Blip Marketing, ou CRM do parceiro integrado (ativo)</td><td>Analista, Agent Blip, Gerente do posto, CRM do parceiro</td><td>Atualiza o CRM após a confirmação por áudio</td><td><div class="chips"><span>Template</span><span>Botões</span><span>Áudio</span><span>Agent de negociação</span></div></td></tr>
+          <tr><td><i style="background:var(--amber)"></i>Negociação de combustível</td><td>Analista, via Blip Marketing, ou CRM do parceiro integrado (ativo)</td><td>Analista, Agent Blip, Gerente do posto, CRM do parceiro</td><td>Consulta a negociação pelo ID e atualiza o CRM após a confirmação por áudio</td><td><div class="chips"><span>Template</span><span>Botões</span><span>Áudio</span><span>Agent de negociação</span></div></td></tr>
           <tr><td><i style="background:var(--purple)"></i>Credenciamento</td><td>Analista, via Blip Marketing, ou CRM do parceiro integrado (ativo)</td><td>Analista, Agent Blip, Gerente do posto, CRM do parceiro</td><td>Realiza o cadastro e credencia o posto</td><td><div class="chips"><span>Template com imagem</span><span>Botões</span><span>WhatsApp Flows</span><span>Agent de vendas</span></div></td></tr>
         </tbody>
       </table>
@@ -631,7 +631,7 @@ footer b{color:var(--ink);font-weight:600}
     <div class="shead reveal">
       <div class="tag"><i style="background:var(--amber)"></i>Jornada 2 · Negociação de preço de combustível</div>
       <h2>Como a Blip enxerga no WhatsApp</h2>
-      <p class="lead">A proposta chega ao gerente pelo mailing do analista ou direto do CRM do parceiro, o aceite acontece em um toque e é formalizado por áudio. Só depois da confirmação o CRM é atualizado.</p>
+      <p class="lead">O disparo leva só o básico (telefone, ID da negociação e nome). Quando o gerente demonstra interesse, a API traz os combustíveis, volumes e preços pelo ID. O aceite acontece em um toque e é formalizado por áudio. Só depois da confirmação o CRM é atualizado.</p>
     </div>
     <div class="wa reveal">
       <div class="left"><ol class="steps"></ol></div>
@@ -639,9 +639,11 @@ footer b{color:var(--ink);font-weight:600}
       <div class="right">
         <div class="ctrl"></div>
         <div class="box"><h4>Recursos do WhatsApp</h4><ul>
-          <li><b>Template aprovado</b> disparado pelo Blip Marketing ou direto do CRM do parceiro (integrado), com distribuidora, litros por mês e preço como variáveis.</li>
+          <li><b>Template aprovado</b> disparado pelo Blip Marketing ou direto do CRM do parceiro (integrado), com o nome do gerente como variável.</li>
+          <li><b>Consulta via API</b> pelo ID da negociação, depois que o gerente demonstra interesse.</li>
           <li><b>Botões de resposta rápida</b> para aceitar ou falar com um consultor.</li>
           <li><b>Mensagem de áudio</b> como confirmação formal do acordo.</li></ul></div>
+        <div class="box obs"><h4>Mais de um combustível por negociação</h4><p>Uma mesma negociação pode envolver <b>vários combustíveis</b>, como etanol, diesel e gasolina, cada um com seu potencial e seu preço.</p><p>O bot apresenta todos e o <b>Agent de negociação precisa negociar cada um deles</b>, inclusive quando o gerente aceita só parte da proposta.</p></div>
         <div class="box alt"><h4>Caminhos alternativos (fora da simulação)</h4><ul>
           <li><b>Não aceitou ou “Falar com consultor”:</b> Agent de negociação explica as vantagens e pergunta de novo.</li>
           <li><b>Segunda tentativa sem aceite:</b> encerra a conversa.</li>
@@ -656,20 +658,23 @@ footer b{color:var(--ink);font-weight:600}
     <div class="shead reveal">
       <div class="tag"><i style="background:var(--amber)"></i>Jornada 2 · Dependências de API</div>
       <h2>O que a empresa parceira precisa disponibilizar</h2>
-      <p class="lead">A mensagem inicial pode sair de duas formas: pelo mailing do analista, sem integração, ou direto do CRM do parceiro, integrado à Blip. A API do parceiro entra no fim, para registrar o acordo fechado no CRM.</p>
+      <p class="lead">A mensagem inicial sai pelo mailing do analista ou direto do CRM do parceiro, levando só telefone, ID da negociação e nome. A API do parceiro entra em dois momentos: consulta os dados da negociação pelo ID quando o gerente demonstra interesse e registra o acordo fechado no fim.</p>
     </div>
-    <div class="apialert reveal"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span><div><b>Pré-requisito para o projeto</b><p>Sem a API de atualização disponível em homologação, o acordo é aceito na conversa mas não chega ao CRM do parceiro, e a jornada não pode ser validada de ponta a ponta.</p></div></div>
+    <div class="apialert reveal"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span><div><b>Pré-requisito para o projeto</b><p>Sem a API de consulta, o bot não tem os combustíveis, volumes e preços para apresentar. Sem a API de atualização, o acordo é aceito na conversa mas não chega ao CRM do parceiro. As duas precisam estar em homologação para validar a jornada de ponta a ponta.</p></div></div>
     <div class="apialert attn reveal"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span><div><b>Ponto de atenção: disparo integrado ao CRM</b><p>A integração do disparo da mensagem inicial deve ser feita pela empresa parceira. No discovery vimos que hoje são <strong>dois sistemas diferentes</strong>: um em que a solicitação de negociação chega ao time de analistas e outro em que a analista busca o número do posto. Para disparar direto do CRM, os dois dados (a negociação e o celular do gerente) precisam estar juntos no momento do disparo, unificando ou integrando os sistemas. Enquanto isso não acontece, o disparo segue pelo mailing do analista.</p></div></div>
     <div class="apis reveal">
       <div class="api trg"><div><div class="nm"><em>0</em><h4>Disparo integrado da mensagem inicial</h4></div><span class="dir">CRM do parceiro → Blip</span><p class="when"><b>Quando:</b> opção ao mailing. O CRM identifica a oportunidade e aciona a API de mensagens ativas da Blip.</p><span class="own">Integração desenvolvida pela empresa parceira</span></div>
-        <div><h5>Envia</h5><div class="f"><span>Celular do gerente</span><span>Nome do dono do posto</span><span>Distribuidora</span><span>Potencial (litros/mês)</span><span>Valor sugerido</span><span>Template aprovado</span></div></div>
+        <div><h5>Envia</h5><div class="f"><span>Número de telefone</span><span>ID da negociação</span><span>Nome (personalização)</span><span>Template aprovado</span></div></div>
         <div><h5>Retorna</h5><div class="f"><span>Status do envio</span><span>ID da mensagem</span></div></div></div>
-      <div class="api"><div><div class="nm"><em>1</em><h4>Atualização das condições no CRM</h4></div><span class="dir">Blip → API do parceiro</span><p class="when"><b>Quando:</b> o áudio de confirmação é recebido e validado (etapa 6).</p></div>
-        <div><h5>Envia</h5><div class="f"><span>CNPJ do posto</span><span>Distribuidora</span><span>Preço por litro</span><span>Potencial (litros/mês)</span><span>Link do áudio</span><span>Data e hora do aceite</span></div></div>
+      <div class="api"><div><div class="nm"><em>1</em><h4>Consulta dos dados da negociação</h4></div><span class="dir">Blip → API do parceiro</span><p class="when"><b>Quando:</b> o gerente responde que quer saber mais (etapa 2). O ID da negociação é a chave da consulta.</p><span class="own">A negociação pode ter mais de um combustível, e o Agent negocia todos</span></div>
+        <div><h5>Envia</h5><div class="f"><span>ID da negociação</span></div></div>
+        <div><h5>Retorna</h5><div class="f"><span>Número de celular</span><span>Nome do dono do posto</span><span>Distribuidora</span><span>Combustíveis (etanol, diesel, gasolina…)</span><span>Potencial (litros/mês) por combustível</span><span>Valor sugerido por combustível</span></div></div></div>
+      <div class="api"><div><div class="nm"><em>2</em><h4>Atualização das condições no CRM</h4></div><span class="dir">Blip → API do parceiro</span><p class="when"><b>Quando:</b> o áudio de confirmação é recebido e validado (etapa 6).</p></div>
+        <div><h5>Envia</h5><div class="f"><span>ID da negociação</span><span>Combustíveis aceitos</span><span>Preço por litro de cada um</span><span>Link do áudio</span><span>Data e hora do aceite</span></div></div>
         <div><h5>Retorna</h5><div class="f"><span>Confirmação</span><span>ID do registro</span></div></div></div>
       <div class="api file"><div><div class="nm"><em>—</em><h4>Mailing do analista</h4></div><span class="dir">Arquivo no Blip Marketing</span><p class="when"><b>Não depende de API.</b> Opção sem integração: o analista carrega a base antes de cada disparo.</p></div>
-        <div><h5>Campos</h5><div class="f"><span>Celular</span><span>Nome do dono do posto</span><span>Distribuidora</span><span>Potencial</span><span>Valor sugerido</span></div></div>
-        <div><h5>Uso</h5><div class="f"><span>Variáveis do template</span></div></div></div>
+        <div><h5>Campos</h5><div class="f"><span>Número de telefone</span><span>ID da negociação</span><span>Nome</span></div></div>
+        <div><h5>Uso</h5><div class="f"><span>Disparo</span><span>Personalização da frase</span><span>Chave para a consulta na API</span></div></div></div>
     </div>
     <div class="reqs reveal">Para começar a integração, precisamos de:<span>Documentação da API</span><span>Ambiente de homologação</span><span>Credenciais de acesso</span><span>Definição de onde guardar o áudio</span></div>
   </div>
@@ -682,7 +687,7 @@ footer b{color:var(--ink);font-weight:600}
         <div class="tag"><i style="background:var(--amber)"></i>Jornada 2 · Fluxo da jornada</div>
         <h2>O fluxo por trás da conversa</h2>
       </div>
-      <div class="meta"><span class="pill">Ativo, pelo analista ou integrado ao CRM · aceite por áudio · 1 chamada de API</span><button class="btn" data-replay><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>Rever animação</button></div>
+      <div class="meta"><span class="pill">Ativo, pelo analista ou integrado ao CRM · aceite por áudio · 2 chamadas de API</span><button class="btn" data-replay><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>Rever animação</button></div>
     </div>
     <div class="flowwrap reveal"><svg class="fl" viewBox="0 0 1600 800" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Fluxograma da negociação de combustível"></svg></div>
   </div>
@@ -768,7 +773,7 @@ footer b{color:var(--ink);font-weight:600}
         <li><b>Negociação de taxa</b>A API de saldo já devolve a margem por CNPJ? Qual time humano recebe o transbordo e em que horário?</li></ul></div>
       <div class="col reveal" style="--c:var(--amber)"><h3>Negociação de combustível</h3><div class="sub">Ativo, via Blip Marketing</div><ul>
         <li><b>Disparo integrado ao CRM</b>Qual sistema vai originar o disparo? Como juntar a solicitação de negociação e o número do posto, que hoje estão em sistemas diferentes?</li>
-        <li><b>Variáveis do template</b>Distribuidora, potencial em litros por mês e valor sugerido vêm do mailing do analista ou da integração?</li>
+        <li><b>Consulta pelo ID da negociação</b>A API devolve todos os combustíveis da negociação, com potencial e preço de cada um? O que fazer se o gerente aceitar só parte deles?</li>
         <li><b>Validação do áudio</b>Basta armazenar a gravação ou é preciso transcrever e conferir a frase?</li>
         <li><b>Agent de negociação</b>Existe margem para contraproposta? O que conta como segunda tentativa?</li></ul></div>
       <div class="col reveal" style="--c:var(--purple)"><h3>Credenciamento</h3><div class="sub">Ativo, via Blip Marketing</div><ul>
@@ -790,7 +795,7 @@ footer b{color:var(--ink);font-weight:600}
     </div>
     <ol class="next reveal">
       <li><div><b>Validar os fluxos</b><span>Ajustes de entendimento e respostas aos pontos em aberto.</span></div></li>
-      <li><div><b>Disponibilizar as APIs do parceiro</b><span>Documentação, homologação e credenciais das APIs de validação do celular, saldo a antecipar, antecipação, atualização e cadastro no CRM, além da integração do CRM para os disparos ativos das três jornadas.</span></div></li>
+      <li><div><b>Disponibilizar as APIs do parceiro</b><span>Documentação, homologação e credenciais das APIs de validação do celular, saldo a antecipar, antecipação, consulta da negociação de combustível, atualização e cadastro no CRM, além da integração do CRM para os disparos ativos das três jornadas.</span></div></li>
       <li><div><b>Aprovar os templates</b><span>Mensagens ativas de antecipação, combustível e credenciamento submetidas à Meta.</span></div></li>
       <li><div><b>Prototipar no Blip</b><span>Fluxos no Stúdio, Agents e WhatsApp Flows prontos para teste.</span></div></li>
     </ol>
@@ -952,7 +957,7 @@ var FLOWS={
  comb:{
   sx:function(x){return 100+(x-205)*1.15;},
   lanes:[{n:'CRM do parceiro',y0:0,y1:110,c:C.purple},{n:'Analista do parceiro',y0:110,y1:250,c:C.teal},{n:'Stúdio / Agent Blip',y0:250,y1:600,c:C.blue},{n:'Gerente do posto',y0:600,y1:800,c:C.amber}],
-  chips:{x:360,y:182,o:1.4,title:'Campos do mailing ou da integração',items:['Número de celular','Nome do dono do posto','Distribuidora','Potencial (litros por mês)','Valor sugerido do combustível']},
+  chips:{x:460,y:182,o:1.4,title:'Mailing ou integração: só o básico para o disparo',items:['Número de telefone','ID da negociação (chave)','Nome (personalização)']},
   nodes:[
    {id:'crmS',t:'start',x:326.7,y:62,o:0},
    {id:'crmB',t:'box',x:213.7,y:62,w:150,h:50,l:'Dispara template\nvia integração',c:C.purple,o:.6},
@@ -961,14 +966,16 @@ var FLOWS={
    {id:'a1',t:'box',x:330,y:180,w:150,h:70,l:'Carrega base\n(mailing) no\nBlip Marketing',c:C.teal,o:1},
    {id:'b1',t:'box',x:330,y:430,h:56,l:'Dispara\nmensagem',o:2},
    {id:'g1',t:'box',x:330,y:700,l:'Responde que\nquer saber mais',c:C.amber,o:3},
-   {id:'b2',t:'box',x:600,y:430,l:'Exibe condições\nda negociação',o:4},
+   {id:'bN',t:'box',x:465.9,y:430,l:'Consulta dados\nda negociação\n(pelo ID)',o:3.5},
+   {id:'b2',t:'box',x:640,y:430,l:'Exibe condições\nde cada\ncombustível',o:4},
+   {id:'nB',t:'note',x:552.8,y:540,w:160,h:104,title:'Lembrete',l:'pode haver mais de um\ncombustível (etanol,\ndiesel, gasolina…).\nO Agent negocia todos.',o:4.2},
    {id:'g2',t:'box',x:780,y:700,l:'Responde se\naceita condições',c:C.amber,o:5},
    {id:'d1',t:'dia',x:920,y:430,l:'Aceitou?',o:6},
    {id:'b3',t:'box',x:1070,y:430,l:'Solicita áudio\nconfirmando',o:7},
    {id:'g3',t:'box',x:1070,y:700,h:56,l:'Envia áudio',c:C.amber,o:8},
    {id:'d2',t:'dia',x:1230,y:430,l:'Confirmou?',o:9},
    {id:'b4',t:'box',x:1390,y:430,h:56,l:'Atualiza CRM',o:10},
-   {id:'db',t:'db',x:1390,y:55,h:76,o:11},
+   {id:'db',t:'db',x:465.9,y:55,h:76,o:3.6},
    {id:'b5',t:'box',x:920,y:320,h:56,l:'Agent de\nnegociação',o:7},
    {id:'d3',t:'dia',x:780,y:320,l:'2ª\ntentativa?',o:8},
    {id:'enc',t:'box',x:630,y:320,h:52,l:'Encerramento',o:9},
@@ -976,11 +983,13 @@ var FLOWS={
    {id:'b6',t:'box',x:780,y:540,h:64,w:136,l:'Explica vantagens\ne pergunta se\ntem interesse',o:9}
   ],
   edges:[
-   {p:['start.r','a1.l']},{p:['a1.b','b1.t'],lab:'Opção 1 · mailing do analista',lc:C.teal,lx:252,ly:388},{p:['b1.b','g1.t']},
+   {p:['start.r','a1.l']},{p:['a1.b','b1.t'],lab:'Opção 1 · mailing',lc:C.teal,lx:252,ly:388},{p:['b1.b','g1.t']},
    {p:['crmS.l','crmB.r']},
    {p:['crmB.b:-50',['crmB:-50','b1'],'b1.l'],lab:'Opção 2 · integrado ao CRM',lc:C.purple,lx:68,ly:332},
    {dot:1,p:['nA.t',['nA','b1']]},
-   {p:['g1.r',[480,'g1'],[480,'b2'],'b2.l']},
+   {p:['g1.r',['bN','g1'],'bN.b']},{p:['bN.r','b2.l']},
+   {api:1,p:['bN.t','db.b'],both:1},
+   {dot:1,p:['nB.r',['b2','nB']]},
    {p:['b2.b',['b2','g2'],'g2.l']},
    {p:['g2.r',['d1','g2'],'d1.b']},
    {p:['d1.r','b3.l'],lab:'Sim'},{p:['d1.t','b5.b'],lab:'Não'},
@@ -989,7 +998,7 @@ var FLOWS={
    {p:['b3.b','g3.t']},{p:['g3.r',['d2','g3'],'d2.b']},
    {p:['d2.t',['d2',374],['b3',374],'b3.t'],lab:'Não'},
    {p:['d2.r','b4.l'],lab:'Sim'},
-   {api:1,p:['b4.t','db.b']}
+   {api:1,p:['b4.t',['b4',55],'db.r']}
   ]
  },
  cred:{
@@ -1257,9 +1266,9 @@ var CHATS={
  comb:{
   start:'14:30',
   steps:[
-   ['Disparo ativo','Pelo mailing do analista no Blip Marketing ou direto do CRM do parceiro, integrado.','Template'],
-   ['Interesse do gerente','O gerente toca em “Tenho interesse”.','Botões'],
-   ['Condições da proposta','Distribuidora, potencial em litros e preço por litro, vindos do mailing.','Botões'],
+   ['Disparo ativo','Mailing (telefone, ID da negociação e nome) ou integração com o CRM do parceiro.','Template'],
+   ['Interesse e consulta','O gerente toca em “Tenho interesse” e a API traz a negociação pelo ID.','API do parceiro'],
+   ['Condições da proposta','Todos os combustíveis da negociação, com potencial e preço de cada um.','Botões'],
    ['Pedido de confirmação por voz','O bot envia a frase que o gerente deve gravar.','Texto'],
    ['Envio do áudio','O gerente grava e envia o áudio na conversa.','Áudio'],
    ['Validação e CRM','Áudio validado; a API atualiza o CRM com as novas condições.','API do parceiro'],
@@ -1267,11 +1276,12 @@ var CHATS={
   ],
   script:[
    {s:1,k:'sys',mk:1,text:'Disparo ativo · mailing no Blip Marketing ou integração com o CRM do parceiro'},
-   {s:1,k:'bot',text:'Olá! Aqui é da equipe de parcerias 🚛💙. Temos uma ótima oportunidade de negócio para o seu posto. Uma nova distribuidora parceira quer abastecer na sua unidade com uma condição diferenciada. Gostaria de ver os detalhes dessa proposta?',btns:['Tenho interesse','Agora não']},
+   {s:1,k:'bot',text:'Olá, *João*! Aqui é da equipe de parcerias 🚛💙. Temos uma ótima oportunidade de negócio para o seu posto. Uma nova distribuidora parceira quer abastecer na sua unidade com uma condição diferenciada. Gostaria de ver os detalhes dessa proposta?',btns:['Tenho interesse','Agora não']},
    {s:2,k:'tap',btn:'Tenho interesse'},
-   {s:3,k:'bot',text:'Excelente! A distribuidora *Logística Rápida S.A.* tem um potencial garantido para abastecer *4.000 litros por mês* no seu posto.\n\nA proposta deles é fechar o valor do combustível a *R$ 5,00 o litro*.\n\nPodemos seguir com essa negociação?',btns:['Aceito a negociação','Falar com consultor']},
+   {s:2,k:'sys',text:'Bastidores · API do parceiro: consulta os dados da negociação pelo ID'},
+   {s:3,k:'bot',text:'Excelente! A distribuidora *Logística Rápida S.A.* quer abastecer o seu posto com dois combustíveis:\n\n⛽ *Etanol:* 4.000 litros por mês a *R$ 3,80 o litro*\n⛽ *Diesel S10:* 6.000 litros por mês a *R$ 5,40 o litro*\n\nPodemos seguir com a negociação dos dois?',btns:['Aceito a negociação','Falar com consultor']},
    {s:3,k:'tap',btn:'Aceito a negociação'},
-   {s:4,k:'bot',text:'Maravilha! 🤝 Para formalizarmos esse acordo com segurança e validade, preciso apenas de uma confirmação por voz.\n\nPor favor, grave e me envie um áudio lendo a seguinte frase:\n\n🎙 _“Eu, [Seu Nome], aceito a proposta para a distribuidora Logística Rápida S.A. no valor de R$ 5,00 o litro.”_'},
+   {s:4,k:'bot',text:'Maravilha! 🤝 Para formalizarmos esse acordo com segurança e validade, preciso apenas de uma confirmação por voz.\n\nPor favor, grave e me envie um áudio lendo a seguinte frase:\n\n🎙 _“Eu, [Seu Nome], aceito a proposta da distribuidora Logística Rápida S.A.: etanol a R$ 3,80 e diesel S10 a R$ 5,40 o litro.”_'},
    {s:5,k:'audio'},
    {s:6,k:'sys',text:'Bastidores · Áudio recebido e validado'},
    {s:6,k:'sys',text:'Bastidores · API do parceiro: atualiza o CRM'},
